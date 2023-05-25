@@ -35,7 +35,7 @@ public class Posts extends BaseTimeEntity {
      * 데이터를 업데이트하는 기능을 포함한다
      * JPA의 엔티티 매니저가 활성화된 상태 하에 트랜잭션 안에서 DB에서 데이터를 가져오면 이는 영속성 컨텍스트가 유지된 상태
      * 즉, 해당 데이터의 값을 변경하면, 트랜잭션이 끝나는 시점에서 해당 테이블에 변경분을 자동으로 반영 (업데이트)
-     * Update 쿼리를 날리지 않아도 된다. 이를 Dirty Checking이라고 한다.
+     * Update 쿼리를 날리지 않아도 된다. 이를 Dirty Checking 이라고 한다.
      * @param title
      * @param content
      */
@@ -49,3 +49,4 @@ public class Posts extends BaseTimeEntity {
  * 자바빈 규약에선 getter/setter를 생성하지만, Entity Class에선 Setter 메소드를 절대 생성하지 않는다.
  * 변경이 필요하면 명확히 목적과 의도를 나타낼 수 있는 메소드만 추가해야한다.
  */
+
