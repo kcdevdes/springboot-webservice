@@ -29,22 +29,24 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private final UserRepository repository;
     private final HttpSession session;
 
-
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
-        String registrationId = userRequest.getClientRegistration().getRegistrationId(); // 현재 로그인 진행 중인 서비스를 구분하는 코드 (Google, Naver)
+        // 현재 로그인 진행 중인 서비스를 구분하는 코드 (Google, Naver)
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        // OAuth2 로그인 진행 시 키가 되는 필드값(PK). 구글의 경우 'sub'
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
-                .getUserInfoEndpoint().getUserNameAttributeName(); // OAuth2 로그인 진행 시 키가 되는 필드값(PK). 구글의 경우 'sub'
+                .getUserInfoEndpoint().getUserNameAttributeName();
 
-        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         // OAuth2UserService를 통해 가져온 OAuth2User의 attribute를 담는 클래스
+        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+
 
         User user = saveOrUpdate(attributes);
-        session.setAttribute("user", new SessionUser(user));
         // 세션에 사용자 정보를 저장하기 위한 DTO 클래스. 다른 클래스에서 저 attribute key로 user값을 가져올 수 있음
+        session.setAttribute("user", new SessionUser(user));
 
         return new DefaultOAuth2User(Collections.singleton(
                     new SimpleGrantedAuthority(user.getRoleKey())),

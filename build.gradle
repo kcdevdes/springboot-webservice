@@ -34,6 +34,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-oauth2-client') // OAuth2 의존성
     compile('org.springframework.session:spring-session-jdbc') // session 저장소 jdbc 의존성
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
 }
 
 test {

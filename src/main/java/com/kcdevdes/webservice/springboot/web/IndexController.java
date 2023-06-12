@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,13 +18,12 @@ import javax.servlet.http.HttpSession;
 public class IndexController {
 
     private final PostsService postsService;
-    private final HttpSession session;
 
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user) {
         model.addAttribute("posts", postsService.findAllDesc());
         // CustomOAuth2UserService 로그인 성공 시
-        // 세션에 SessionUser를 저장하도록 구성했었음.
+        // 세션에 SessionUser 를 저장하도록 구성.
         if (user != null) {
             model.addAttribute("userName", user.getName());
         }
